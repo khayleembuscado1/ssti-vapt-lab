@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h2>Search Users</h2><form method="get"><input name="q" value="{{ q }}" placeholder="Search username, name, or email"><button type="submit">Search</button></form></div>
+<div class="card"><h3>Results</h3>{% if users %}<table><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Email</th></tr></thead><tbody>{% for user in users %}<tr><td>{{ user.id }}</td><td><a href="{{ url_for('user_profile', user_id=user.id) }}">{{ user.username }}</a></td><td>{{ user.full_name }}</td><td>{{ user.email }}</td></tr>{% endfor %}</tbody></table>{% else %}<p>No results found.</p>{% endif %}</div>
+{% endblock %}

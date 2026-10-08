@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<div class="hero"><h1>Security Testing Web Application</h1><p>A small Flask/Jinja2 application with SQLite data for controlled VAPT testing.</p>
+<div class="warning">The <strong>/preview</strong> endpoint intentionally contains an SSTI vulnerability. Do not expose this application to the public Internet.</div></div>
+<div class="card"><div class="card-header"><h2>Lab Users</h2><span class="badge">{{ users|length }} records</span></div>
+<table><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>
+{% for user in users %}<tr><td>{{ user.id }}</td><td><a href="{{ url_for('user_profile', user_id=user.id) }}">{{ user.username }}</a></td><td>{{ user.full_name }}</td><td>{{ user.email }}</td><td>{{ user.role }}</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="grid"><div class="card"><h3>Vulnerable endpoint</h3><p><code>/preview?name=...</code></p><p class="muted">Input becomes part of the Jinja2 template source.</p></div>
+<div class="card"><h3>Secure comparison</h3><p><code>/safe-preview?name=...</code></p><p class="muted">Input is rendered as data instead of template source.</p></div></div>
+<form method="post" action="{{ url_for('reset_db') }}"><button class="secondary" type="submit">Reset Lab Database</button></form>
+{% endblock %}
